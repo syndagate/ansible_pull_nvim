@@ -33,6 +33,7 @@ lsp_zero.on_attach(function(client, bufnr)
 end)
 
 require('lspconfig').phpactor.setup({})
+require'lspconfig'.ansiblels.setup{}
 
 local cmp = require('cmp')
 local cmp_action = require('lsp-zero').cmp_action()

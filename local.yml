@@ -1,11 +1,53 @@
 ---
 
 - hosts: localhost
+  name: Install and config neovim
   connection: local
   become: true
   tasks:
 
-    - name: install neovim from snap
-      community.general.snap:
-        name: neovim
-        classic: true
+    - name: Download neovim
+      ansible.builtin.get_url:
+        url: https://github.com/neovim/neovim/releases/download/v0.9.2/nvim.appimage
+        dest: /usr/bin/nvim
+        mode: 655
+
+    - name: Check if nvim config folder exits
+      ansible.builtin.stat:
+        path: "/home/{{ item }}/.config/nvim/lua/"
+      register: file_data
+      loop: "{{ users }}"
+
+    - name: Backup nvim config dir
+      ansible.builtin.command:
+        cmd: mv "/home/{{ item.item }}/.config/nvim" "/home/{{ item.item }}/.config/nvim_bck"
+      when: item.stat.exists
+      loop: "{{ file_data.results }}"
+
+    - name: Ensure ~/.config/nvim exists
+      ansible.builtin.file:
+        path: "/home/{{ item }}/.config/nvim/lua"
+        state: directory
+        owner: "{{ item }}"
+        group: "{{ item }}"
+        mode: "0775"
+        recurse: true
+      loop: "{{ users }}"
+
+    - name: Copy init.lua
+      ansible.builtin.copy:
+        src: init.lua
+        dest: "/home/{{ item }}/.config/nvim/"
+        owner: "{{ item }}"
+        group: "{{ item }}"
+        mode: "0644"
+      loop: "{{ users }}"
+
+    - name: Copy lua files
+      ansible.builtin.copy:
+        src: lua/
+        dest: "/home/{{ item }}/.config/nvim/lua/"
+        owner: "{{ item }}"
+        group: "{{ item }}"
+        mode: "0644"
+      loop: "{{ users }}"
