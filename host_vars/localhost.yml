@@ -1,0 +1,7 @@
+---
+packages:
+  - neovim
+  - git
+
+users:
+  - dw
