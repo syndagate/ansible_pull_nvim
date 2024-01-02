@@ -1,6 +1,5 @@
 ---
 packages:
-  - git
   - ripgrep
   - fd-find
 
