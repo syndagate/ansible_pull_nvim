@@ -60,3 +60,5 @@ cmp.setup({
 
   })
 })
+
+require('config.keymaps')

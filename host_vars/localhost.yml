@@ -1,6 +1,8 @@
 ---
 packages:
   - git
+  - ripgrep
+  - fd-find
 
 users:
   - dw
