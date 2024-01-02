@@ -1,4 +1,3 @@
 return {
-  'nvim-treesitter/nvim-treesitter',
-  {'do': ':TSUpdate'}
+  'nvim-treesitter/nvim-treesitter'
 }
