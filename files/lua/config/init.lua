@@ -103,4 +103,4 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 
-require('config.keymaps')
+require('config.keybinds')
