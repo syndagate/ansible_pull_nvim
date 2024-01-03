@@ -31,17 +31,17 @@
         dest: /usr/local/bin/phpactor
         mode: 655
     
-    - name: Check if nvim config folder exits
-      ansible.builtin.stat:
-        path: "/home/{{ item }}/.config/nvim/lua/"
-      register: file_data
-      loop: "{{ users }}"
-
-    - name: Backup nvim config dir
-      ansible.builtin.command:
-        cmd: mv "/home/{{ item.item }}/.config/nvim" "/home/{{ item.item }}/.config/nvim_bck"
-      when: item.stat.exists
-      loop: "{{ file_data.results }}"
+    # - name: Check if nvim config folder exits
+    #   ansible.builtin.stat:
+    #     path: "/home/{{ item }}/.config/nvim/lua/"
+    #   register: file_data
+    #   loop: "{{ users }}"
+    #
+    # - name: Backup nvim config dir
+    #   ansible.builtin.command:
+    #     cmd: mv "/home/{{ item.item }}/.config/nvim" "/home/{{ item.item }}/.config/nvim_bck"
+    #   when: item.stat.exists
+    #   loop: "{{ file_data.results }}"
 
     - name: Ensure ~/.config/nvim exists
       ansible.builtin.file:
